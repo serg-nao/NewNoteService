@@ -23,4 +23,14 @@ interface Element<T: Node> {
     fun getById(id: Int): T? {
         return elements.find {it.id == id}
     }
+
+    fun delete(id: Int): Boolean {
+        for ((index, node) in elements.withIndex()) {
+            if (node.id == id) {
+                elements.removeAt(index)
+                return true
+            }
+        }
+        return false
+    }
 }
