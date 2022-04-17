@@ -1,14 +1,18 @@
 package ru.netology
 
 class NoteService : Element<Note> {
-    private val notes = mutableListOf<Note>()
+    val notes = mutableListOf<Note>()
     override var nextId = 1
     override val elements
     get() = notes
 
     fun createComment(noteId: Int, comment: Comment): Int? {
         var lastId = getById(noteId)?.comments?.size
-        if (lastId != null) comment.id = lastId
+        if (lastId != 0) {
+            comment.id = lastId!! + 1
+        } else {
+            comment.id = 1
+        }
         getById(noteId)?.comments?.add(comment)
         return getById(noteId)?.comments?.last()?.id
     }
@@ -22,9 +26,9 @@ class NoteService : Element<Note> {
         return false
     }
 
-    fun editComment(noteId: Int,commentId: Int, message: String): Boolean {
-        val thisComment = getById(noteId)?.comments?.elementAt(commentId)
-        if (thisComment != null) {
+    fun editComment(noteId: Int, commentId: Int, message: String): Boolean {
+        val thisComment = getById(noteId)?.comments?.elementAt(commentId - 1)
+        if (!getById(noteId)?.comments?.elementAt(commentId - 1)?.deleted!!) {
                 getById(noteId)!!.comments[commentId - 1].message = message
                 return true
             }

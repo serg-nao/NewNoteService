@@ -10,7 +10,7 @@ interface Element<T: Node> {
         return elements.last().id
     }
 
-    fun update(elem: T): Boolean {
+    fun edit(elem: T): Boolean {
         for ((index, node) in elements.withIndex()) {
             if (node.id == elem.id) {
                 elements[index] = elem
